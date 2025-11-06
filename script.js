@@ -72,3 +72,33 @@ function clearForm() {
     petCodeInput.value = '';
     petSoldInput.checked = false;
 }
+
+function renderPets() {
+    // Clear the entire list container
+    petListContainer.innerHTML = '';
+
+    // Loop through every pet in our 'pets' array
+    for (const pet of pets) {
+        
+        // Create the HTML string for the pet card 
+        const petCardHtml = `
+            <div class="pet-card" data-id="${pet.id}">
+                <img src="${pet.imageUrl}" alt="${pet.name}">
+                <h4>${pet.name}</h4>
+                <p><strong>Code:</strong> ${pet.petCode}</p>
+                <p><strong>Born:</strong> ${pet.birthdate}</p>
+                <p><strong>Price:</strong> $${pet.price.toFixed(2)}</p>
+                <p>${pet.description}</p>
+                
+                <div class="buttons">
+                    </div>
+            </div>
+        `;
+
+        // Add the new HTML string to the container
+        petListContainer.innerHTML += petCardHtml;
+    }
+}
+
+// Initial render
+renderPets();
