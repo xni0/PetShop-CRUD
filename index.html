@@ -14,6 +14,52 @@
     </header>
 
     <main>
+        <form id="petForm">
+            <h3>Add a New Pet</h3>
+            
+            <div>
+                <label for="petName">Pet Name:</label>
+                <input type="text" id="petName">
+            </div>
+            
+            <div>
+                <label for="petDesc">Description:</label>
+                <input type="text" id="petDesc">
+            </div>
+
+            <div>
+                <label for="petImage">Image URL:</label>
+                <input type="url" id="petImage" placeholder="http://.../image.png">
+            </div>
+
+            <div>
+                <label for="petBirthdate">Birthdate:</label>
+                <input type="date" id="petBirthdate">
+            </div>
+
+            <div>
+                <label for="petPrice">Price:</label>
+                <input type="number" id="petPrice" step="0.01">
+            </div>
+
+            <div>
+                <label for="petCode">Pet Code:</label>
+                <input type="text" id="petCode" placeholder="e.g., CAT123">
+            </div>
+
+            <div class="checkbox-container">
+                <label for="petSold">Sold?</label>
+                <input type="checkbox" id="petSold">
+            </div>
+
+            <button type="submit" id="addBtn">Add Pet</button>
+        </form>
+
+        <hr>
+
+        <h2>Our Pets</h2>
+        <div id="petListContainer">
+            </div>
         </main>
 
     <script src="script.js"></script>
