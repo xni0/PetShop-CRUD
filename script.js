@@ -31,7 +31,7 @@ function handleFormSubmit(event) {
     const petCode = petCodeInput.value;
     const isSold = petSoldInput.checked; 
 
-    // --- Validation ---
+    // Validation 
     if (!name || !description || !imageUrl || !birthdate || !price || !petCode) {
         alert('Please fill in all fields!');
         return; 
@@ -152,6 +152,19 @@ function deletePet(id) {
         // Re-draw the list
         renderPets();
     }
+}
+
+
+// Toggles the 'isSold' status of a pet
+function toggleSold(id) {
+    // Find the pet in the array
+    const pet = pets.find(p => p.id === id);
+    
+    // Flip the boolean value
+    pet.isSold = !pet.isSold;
+
+    // Re-draw the list
+    renderPets();
 }
 
 // Initial render

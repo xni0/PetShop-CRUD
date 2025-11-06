@@ -110,7 +110,15 @@ form button {
     flex: 1;
 }
 
+.btn-edit { 
+    background-color: #ffc107;
+ }
+
 .btn-delete { 
     background-color: #dc3545; color: white;
+ }
+
+.btn-toggle-sold {
+     background-color: #28a745; color: white;
  }
 
