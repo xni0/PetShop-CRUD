@@ -20,6 +20,47 @@ petForm.addEventListener('submit', handleFormSubmit);
 
 // Functions
 
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const name = petNameInput.value;
+    const description = petDescInput.value;
+    const imageUrl = petImageInput.value;
+    const birthdate = petBirthdateInput.value;
+    const price = petPriceInput.value; 
+    const petCode = petCodeInput.value;
+    const isSold = petSoldInput.checked; 
+
+    // --- Validation ---
+    if (!name || !description || !imageUrl || !birthdate || !price || !petCode) {
+        alert('Please fill in all fields!');
+        return; 
+    }
+
+    const urlRegex = /\.(jpeg|jpg|gif|png)$/i; 
+    if (!urlRegex.test(imageUrl)) {
+        alert('Please enter a valid image URL (must end in .jpg, .png, or .gif)');
+        return;
+    }
+
+    const today = new Date();
+    const birthDateObj = new Date(birthdate);
+    if (birthDateObj > today) {
+        alert('Birthdate cannot be in the future!');
+        return;
+    }
+
+    const priceNum = parseFloat(price); 
+    if (priceNum <= 0) {
+        alert('Price must be a positive number!');
+        return;
+    }
+
+    const codeRegex = /^[A-Z]{3}[0-9]{3}$/i; 
+    if (!codeRegex.test(petCode)) {
+        alert('Pet Code must be 3 letters followed by 3 numbers (e.g., CAT123)');
+        return;
+    }
 
 // This function runs when the form is submitted
 
