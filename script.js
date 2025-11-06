@@ -100,5 +100,18 @@ function renderPets() {
     }
 }
 
+
+// Deletes a pet when the 'Delete' button is clicked
+function deletePet(id) {
+    // Ask for confirmation
+    if (confirm('Are you sure you want to delete this pet?')) {
+        // Re-create the 'pets' array, filtering out the one with the matching ID
+        pets = pets.filter(pet => pet.id !== id);
+
+        // Re-draw the list
+        renderPets();
+    }
+}
+
 // Initial render
 renderPets();

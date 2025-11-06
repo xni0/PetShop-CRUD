@@ -94,3 +94,22 @@ form button {
     color: #666;
     margin: 5px 0;
 }
+
+.pet-card .buttons {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.pet-card button {
+    padding: 5px;
+    font-size: 12px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.btn-delete { 
+    background-color: #dc3545; color: white;
+ }
