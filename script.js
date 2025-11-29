@@ -1,5 +1,9 @@
+/**
+ * Pet Store Management with Local Storage
+ * Developed by: Lucilene Vidal Lima
+ * Practice: P7.1
+ */
 
-//  Global Variables 
 // It's an empty array that acts as my temporary "database."
 let pets = [];
 
@@ -21,6 +25,68 @@ const addBtn = document.getElementById('addBtn');
 
 // Get the container for the pet list
 const petListContainer = document.getElementById('petListContainer');
+
+/**
+ * Checks LocalStorage for data.
+ * If empty, loads initial dummy data.
+ * If exists, parses JSON to pets array.
+ */
+function initPets() {
+    const storedPets = localStorage.getItem('petStore_data');
+
+    if (storedPets) {
+        // If data exists in storage, use it
+        pets = JSON.parse(storedPets);
+    } else {
+        // If NO data exists (first time load), add dummy pets
+        pets = [
+            {
+                id: 1700000000001,
+                name: "Luna",
+                description: "A friendly golden retriever.",
+                imageUrl: "https://images.dog.ceo/breeds/retriever-golden/n02099601_10.jpg",
+                birthdate: "2020-05-15",
+                price: 150.00,
+                petCode: "DOG001",
+                isSold: false
+            },
+            {
+                id: 1700000000002,
+                name: "Felix",
+                description: "Lazy but cute cat.",
+                imageUrl: "https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg",
+                birthdate: "2021-08-10",
+                price: 80.50,
+                petCode: "CAT002",
+                isSold: true
+            }
+        ];
+        // Save these initial pets to storage immediately
+        saveToLocalStorage();
+    }
+    // Draw the list
+    renderPets();
+}
+
+/**
+ * Saves the current 'pets' array to LocalStorage
+ * Must be called whenever the array changes (Add, Edit, Delete)
+ */
+function saveToLocalStorage() {
+    localStorage.setItem('petStore_data', JSON.stringify(pets));
+}
+
+/**
+ * Clears the list and LocalStorage
+ * Connected to the new button in HTML
+ */
+function clearAllPets() {
+    if (confirm('Are you sure you want to delete ALL pets? This cannot be undone.')) {
+        pets = []; // Empty the array
+        localStorage.removeItem('petStore_data'); // Clear storage
+        renderPets(); // Re-draw (empty list)
+    }
+}
 
 // Event Listeners 
 
@@ -157,6 +223,7 @@ function handleFormSubmit(event) {
         pets.push(newPet);
     }
     
+    saveToLocalStorage();
     // Re-draw all pets on the page
     // whether we added or updated
     // to force the changes to show
@@ -243,6 +310,7 @@ function deletePet(id) {
     if (confirm('Are you sure you want to delete this pet?')) {
         // Re-create the array without the pet
         pets = pets.filter(pet => pet.id !== id);
+        saveToLocalStorage();
         // Re-draw the list
         renderPets();
     }
@@ -255,6 +323,7 @@ function toggleSold(id) {
     const pet = pets.find(p => p.id === id);
     // Flip the boolean value
     pet.isSold = !pet.isSold;
+    saveToLocalStorage();
     // Re-draw the list
     renderPets();
 }
@@ -289,5 +358,5 @@ function editPet(id) {
 
 }
 
-// Initial render (draws an empty list)
-renderPets();
+// Initialize the app by loading pets from LocalStorage
+initPets();
