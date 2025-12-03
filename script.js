@@ -27,15 +27,17 @@ const addBtn = document.getElementById('addBtn');
 const petListContainer = document.getElementById('petListContainer');
 
 /**
- * Checks LocalStorage for data.
+ * Checks *LocalStorage* for data.
  * If empty, loads initial dummy data.
  * If exists, parses JSON to pets array.
  */
 function initPets() {
+    // petStore_data is the key name in LocalStorage
     const storedPets = localStorage.getItem('petStore_data');
 
     if (storedPets) {
         // If data exists in storage, use it
+        // converts the JSON string back into an array of objects
         pets = JSON.parse(storedPets);
     } else {
         // If NO data exists (first time load), add dummy pets
@@ -48,7 +50,8 @@ function initPets() {
                 birthdate: "2020-05-15",
                 price: 150.00,
                 petCode: "DOG001",
-                isSold: false
+                isSold: false,
+                isDefault: true
             },
             {
                 id: 1700000000002,
@@ -58,7 +61,8 @@ function initPets() {
                 birthdate: "2021-08-10",
                 price: 80.50,
                 petCode: "CAT002",
-                isSold: true
+                isSold: true,
+                isDefault: true
             }
         ];
         // Save these initial pets to storage immediately
@@ -69,19 +73,27 @@ function initPets() {
 }
 
 /**
- * Saves the current 'pets' array to LocalStorage
+ * Saves the current 'pets' array to *LocalStorage*
  * Must be called whenever the array changes (Add, Edit, Delete)
+ * 
+ * We call this function on handleFormSubmit, deletePet, initPets and toggleSold
+ * because those functions change the pets array.
  */
 function saveToLocalStorage() {
+    // Convert the pets array to a JSON string
+    // and store it in LocalStorage under the key 'petStore_data'
     localStorage.setItem('petStore_data', JSON.stringify(pets));
 }
 
 /**
- * Clears the list and LocalStorage
+ * Logic for 'Clear All Pets' button
+ * Clears the list and *LocalStorage* of ALL pets
  * Connected to the new button in HTML
  */
 function clearAllPets() {
+    // confirm is a built-in browser function that shows a popup with OK and Cancel buttons
     if (confirm('Are you sure you want to delete ALL pets? This cannot be undone.')) {
+        // Clear the pets array and remove the data from *LocalStorage*
         pets = []; // Empty the array
         localStorage.removeItem('petStore_data'); // Clear storage
         renderPets(); // Re-draw (empty list)
@@ -202,6 +214,17 @@ function handleFormSubmit(event) {
         addBtn.textContent = 'Add Pet';
 
     } else {
+
+        //  ADD NEW PET
+
+        // If there are default pets, remove them before adding new ones
+        // This prevents mixing default pets with user-added pets
+        // *LocalStorage* will only have user-added pets after the first addition
+        // .some checks if any pet has isDefault = true
+
+        if (pets.some(pet => pet.isDefault)) {
+             pets = []; 
+        }
         //  TO ADD A NEW PET 
 
         // Create a new pet object with a unique ID
